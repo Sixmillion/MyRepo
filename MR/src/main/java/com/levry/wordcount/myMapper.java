@@ -1,9 +1,10 @@
-package com.levry.mrtest;
+package com.levry.wordcount;
 
 import java.io.IOException;
 import java.util.StringTokenizer;
 
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
@@ -53,16 +54,18 @@ import org.apache.hadoop.mapreduce.Mapper;
  * 		5.output.close(mapperContext):Ê£ÓàÒçÐ´Ð¡ÎÄ¼þmerge
  * 
  */
-public class myMapper extends Mapper<Object, Text, Text, IntWritable>{
 
-	private final static IntWritable one = new IntWritable(1);
-	private Text word = new Text();
-
-	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-		StringTokenizer itr = new StringTokenizer(value.toString());
-		while (itr.hasMoreTokens()) {
-		  word.set(itr.nextToken());
-		  context.write(word, one);
-		}
-	}
+public class myMapper extends Mapper<LongWritable, Text, Text, IntWritable>{
+	
+	   private final static IntWritable one = new IntWritable(1);
+	   private Text word = new Text();
+	   
+	   public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+	     StringTokenizer itr = new StringTokenizer(value.toString());
+	     while (itr.hasMoreTokens()) {
+	       word.set(itr.nextToken());
+	       context.write(word, one);
+	     }
+	   }
+	
 }
